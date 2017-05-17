@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.estacio.terenciani.model.Aluno;
 import br.estacio.terenciani.repository.AlunoRepository;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class AlunoController {
@@ -21,14 +23,14 @@ public class AlunoController {
 	
 	@RequestMapping(value="/aluno", 
 			method=RequestMethod.GET)
-	public @ResponseBody List<Aluno> qualquerCoisa() {
+	public @ResponseBody List<Aluno> listarTodos() {
 		return this.alunoRepository.findAll();
 
 	}
 	
 	@RequestMapping(value="/aluno/{id}", 
 			method=RequestMethod.DELETE)
-	public HttpStatus excluir(@PathVariable Long id){
+	public @ResponseBody HttpStatus excluir(@PathVariable Long id){
 		try{
 			this.alunoRepository.delete(id);
 			return HttpStatus.OK;
@@ -36,12 +38,17 @@ public class AlunoController {
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 	}
-	/*
+        
+      
+	
 	@RequestMapping(value="/aluno", 
-			method=RequestMethod.POST)
-	public void adicionar(Aluno aluno){
-		this.alunoRepository.save(aluno);
+			method=RequestMethod.POST, 
+                        consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Aluno adicionar(@RequestBody Aluno aluno){
+		return this.alunoRepository.save(aluno);
 	}
+        
+        /*
 	@RequestMapping(value="/aluno", 
 			method=RequestMethod.GET)
 	public void listarPorId(Long id){
