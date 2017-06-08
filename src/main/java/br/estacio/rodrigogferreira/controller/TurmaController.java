@@ -10,41 +10,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.estacio.rodrigogferreira.model.Aluno;
-import br.estacio.rodrigogferreira.repository.AlunoRepository;
+import br.estacio.rodrigogferreira.model.Turma;
+import br.estacio.rodrigogferreira.repository.TurmaRepository;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
-public class AlunoController {
+public class TurmaController {
 
 	@Autowired
-	AlunoRepository alunoRepository;
+	TurmaRepository turmaRepository;
 	
-	@RequestMapping(value="/aluno", 
+	@RequestMapping(value="/turma",
 			method=RequestMethod.GET)
-	public @ResponseBody List<Aluno> listarTodos() {
-		return this.alunoRepository.findAll();
+	public @ResponseBody List<Turma> listarTodos() {
+		return this.turmaRepository.findAll();
 
 	}
 	
-	@RequestMapping(value="/aluno/{id}", 
+	@RequestMapping(value="/turma/{id}", 
 			method=RequestMethod.DELETE)
 	public @ResponseBody HttpStatus excluir(@PathVariable Long id){
 		try{
-			this.alunoRepository.delete(id);
+			this.turmaRepository.delete(id);
 			return HttpStatus.OK;
 		} catch (Exception e) {
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-	}
-        
-      
+	} 
 	
-	@RequestMapping(value="/aluno", 
+	@RequestMapping(value="/turma", 
 			method=RequestMethod.POST, 
                         consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Aluno adicionar(@RequestBody Aluno aluno){
-		return this.alunoRepository.save(aluno);
+	public @ResponseBody Turma adicionar(@RequestBody Turma turma){
+		return this.turmaRepository.save(turma);
 	}
 }
